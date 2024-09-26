@@ -4,6 +4,7 @@ import _init_path
 import argparse
 import datetime
 import glob
+import numpy as np
 from pathlib import Path
 from test import repeat_eval_ckpt
 
@@ -50,7 +51,9 @@ def parse_config():
     parser.add_argument('--ckpt_save_time_interval', type=int, default=300, help='in terms of seconds')
     parser.add_argument('--wo_gpu_stat', action='store_true', help='')
     parser.add_argument('--use_amp', action='store_true', help='use mix precision training')
-    
+
+    # Add a new argument for FLOP counting
+    parser.add_argument('--count_flops', action='store_true', default=False, help='Count FLOPs before training')
 
     args = parser.parse_args()
 
@@ -131,6 +134,105 @@ def main():
     if args.sync_bn:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     model.cuda()
+
+    # COUNT FLOPS
+    # if args.count_flops:
+    #     logger.info("----------- Profiling Model -----------")
+    #     # Get a sample batch from the dataloader
+    #     for batch_dict in train_loader:
+    #         break  # We only need one batch
+        
+    #     prof, manual_flops = model.count_flops(batch_dict)
+        
+    #     logger.info("Profiling completed. Top 10 time-consuming operations:")
+    #     logger.info(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
+        
+    #     logger.info(f"Manually estimated FLOPs: {manual_flops}")
+        
+    #     # Extract CPU and CUDA time from the profiler
+    #     cpu_time_total = sum(event.cpu_time_total for event in prof.key_averages())
+    #     cuda_time_total = sum(event.cuda_time_total for event in prof.key_averages())
+        
+    #     logger.info(f"CPU Time Total: {cpu_time_total:.2f}ms")
+    #     logger.info(f"CUDA Time Total: {cuda_time_total:.2f}ms")
+        
+    #     logger.info("A 'trace.json' file has been created. You can view it in Chrome's chrome://tracing page.")
+
+    #     # Log memory usage
+    #     logger.info("Memory Usage:")
+    #     logger.info(f"  Allocated: {torch.cuda.memory_allocated() / 1024**2:.2f} MB")
+    #     logger.info(f"  Cached: {torch.cuda.memory_reserved() / 1024**2:.2f} MB")
+
+    #     # Log the model structure
+    #     logger.info("Model Structure:")
+    #     logger.info(model)
+
+
+
+
+    # # COUNT FLOPS
+    # if args.count_flops:
+    #     logger.info("----------- Profiling Model -----------")
+    #     # Get a sample batch from the dataloader
+    #     for batch_dict in train_loader:
+    #         break  # We only need one batch
+        
+    #     prof, total_flops = model.count_flops(batch_dict)
+        
+    #     logger.info("Profiling completed. Top 20 time-consuming operations:")
+    #     logger.info(prof.key_averages().table(sort_by="cuda_time_total", row_limit=20))
+        
+    #     logger.info(f"Estimated total FLOPs: {total_flops:,}")
+        
+    #     # Extract CPU and CUDA time from the profiler
+    #     cpu_time_total = sum(event.cpu_time_total for event in prof.key_averages())
+    #     cuda_time_total = sum(event.cuda_time_total for event in prof.key_averages())
+        
+    #     logger.info(f"CPU Time Total: {cpu_time_total:.2f}ms")
+    #     logger.info(f"CUDA Time Total: {cuda_time_total:.2f}ms")
+        
+    #     logger.info("A 'trace.json' file has been created. You can view it in Chrome's chrome://tracing page.")
+
+    #     # Log memory usage
+    #     logger.info("Memory Usage:")
+    #     logger.info(f"  Allocated: {torch.cuda.memory_allocated() / 1024**2:.2f} MB")
+    #     logger.info(f"  Cached: {torch.cuda.memory_reserved() / 1024**2:.2f} MB")
+
+    #     # Log the model structure
+    #     logger.info("Model Structure:")
+    #     logger.info(model)
+
+
+
+
+    # COUNT FLOPS
+    if args.count_flops:
+        logger.info("----------- Profiling Model -----------")
+        # Get a sample batch from the dataloader
+        for batch_dict in train_loader:
+            break  # We only need one batch
+        
+        prof, total_params, total_flops = model.count_flops(batch_dict)
+        
+        logger.info("Profiling completed. Top 20 time-consuming operations:")
+        logger.info(prof.key_averages().table(sort_by="cuda_time_total", row_limit=20))
+        
+        logger.info(f"Total Parameters: {total_params:,}")
+        logger.info(f"Estimated total FLOPs: {total_flops:,}")
+        
+        # Extract CPU and CUDA time from the profiler
+        cpu_time_total = sum(event.cpu_time_total for event in prof.key_averages())
+        cuda_time_total = sum(event.cuda_time_total for event in prof.key_averages())
+        
+        logger.info(f"CPU Time Total: {cpu_time_total:.2f}ms")
+        logger.info(f"CUDA Time Total: {cuda_time_total:.2f}ms")
+        
+        logger.info("A 'trace.json' file has been created. You can view it in Chrome's chrome://tracing page.")
+
+        # Log memory usage
+        logger.info("Memory Usage:")
+        logger.info(f"  Allocated: {torch.cuda.memory_allocated() / 1024**2:.2f} MB")
+        logger.info(f"  Cached: {torch.cuda.memory_reserved() / 1024**2:.2f} MB")
 
     optimizer = build_optimizer(model, cfg.OPTIMIZATION)
 

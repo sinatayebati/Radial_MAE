@@ -3,6 +3,7 @@ import random
 import numpy as np
 import torch
 import torch.nn as nn
+from fvcore.nn import FlopCountAnalysis, flop_count_table, flop_count_str
 
 from ...utils.spconv_utils import replace_feature, spconv
 from ...utils import common_utils
@@ -53,6 +54,7 @@ class Voxel_MAE(nn.Module):
     """
 
     def __init__(self, model_cfg, input_channels, grid_size, voxel_size, point_cloud_range, **kwargs):
+        print("Initializing Voxel_MAE with count_flops method")
         super().__init__()
         self.model_cfg = model_cfg
         self.sparse_shape = grid_size[::-1] + [1, 0, 0]
@@ -137,6 +139,34 @@ class Voxel_MAE(nn.Module):
         }
 
         return loss, tb_dict
+    
+    def count_flops(self, batch_dict):
+        self.eval()
+        device = next(self.parameters()).device
+        
+        # Ensure batch_size is present
+        if 'batch_size' not in batch_dict:
+            batch_dict['batch_size'] = 1  # Assume batch size of 1 for FLOP counting
+
+        # Move batch_dict to the same device as the model
+        processed_batch_dict = {k: v.to(device) if isinstance(v, torch.Tensor) else v for k, v in batch_dict.items()}
+
+        # Print batch_dict keys and shapes for debugging
+        print("Keys in batch_dict:")
+        for k, v in processed_batch_dict.items():
+            if isinstance(v, torch.Tensor):
+                print(f"{k}: shape={v.shape}, device={v.device}")
+            else:
+                print(f"{k}: {type(v)}")
+
+        # Use FlopCountAnalysis
+        flop = FlopCountAnalysis(self, processed_batch_dict)
+        
+        print(flop_count_table(flop, max_depth=4))
+        print(flop_count_str(flop))
+        print(f"Total FLOPs: {flop.total()}")
+
+        return flop.total()
 
 
     def forward(self, batch_dict):
@@ -151,7 +181,7 @@ class Voxel_MAE(nn.Module):
                 encoded_spconv_tensor: sparse tensor
                 point_features: (N, C)
         """
-  
+
         voxel_features, voxel_coords = batch_dict['voxel_features'], batch_dict['voxel_coords']
 
         select_ratio = 1 - self.masked_ratio # ratio for select voxel
@@ -188,7 +218,9 @@ class Voxel_MAE(nn.Module):
         voxel_features_partial, voxel_coords_partial = voxel_features[slect_index,:], voxel_coords[slect_index,:]
 
 
-        batch_size = batch_dict['batch_size']
+        # batch_size = batch_dict['batch_size']
+        # TEMP CODE
+        batch_size = batch_dict.get('batch_size', 4)
         input_sp_tensor = spconv.SparseConvTensor(
             features=voxel_features_partial,
             indices=voxel_coords_partial.int(),

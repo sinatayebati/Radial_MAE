@@ -191,7 +191,11 @@ class Detector3DTemplate_voxel_mae(nn.Module):
         Returns:
 
         """
-        post_process_cfg = self.model_cfg.POST_PROCESSING
+        # post_process_cfg = self.model_cfg.POST_PROCESSING
+        post_process_cfg = self.model_cfg.get('POST_PROCESSING', None)
+        if post_process_cfg is None:
+            return batch_dict, {}
+        
         batch_size = batch_dict['batch_size']
         recall_dict = {}
         pred_dicts = []

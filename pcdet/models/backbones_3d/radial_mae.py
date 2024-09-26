@@ -4,6 +4,7 @@ import math
 import numpy as np
 import torch
 import torch.nn as nn
+from torch.profiler import profile, record_function, ProfilerActivity
 
 from ...utils.spconv_utils import replace_feature, spconv
 from ...utils import common_utils
@@ -56,7 +57,7 @@ class Radial_MAE(nn.Module):
     def __init__(self, model_cfg, input_channels, grid_size, voxel_size, point_cloud_range, **kwargs):
         super().__init__()
         self.model_cfg = model_cfg
-        self.sparse_shape = grid_size[::-1] + [1, 0, 0]
+        self.sparse_shape = grid_size[::-1]+ [1, 0, 0]
         self.voxel_size = voxel_size
         self.point_cloud_range = point_cloud_range
         
@@ -153,7 +154,8 @@ class Radial_MAE(nn.Module):
                 encoded_spconv_tensor: sparse tensor
                 point_features: (N, C)
         """
-  
+
+
         voxel_features, voxel_coords = batch_dict['voxel_features'], batch_dict['voxel_coords']
 
         select_ratio = 1 - self.masked_ratio # ratio for select voxel
@@ -225,7 +227,9 @@ class Radial_MAE(nn.Module):
         voxel_coords_partial = voxel_coords[selected_indices_tensor, :] # shape [N, 4]
 
 
-        batch_size = batch_dict['batch_size']
+        # batch_size = batch_dict['batch_size']
+        # TEMP CODE
+        batch_size = batch_dict.get('batch_size', 4)
         """
         spconv.SparseConvTensor:
             Args:
@@ -257,9 +261,15 @@ class Radial_MAE(nn.Module):
         x_conv3 = self.conv3(x_conv2)
         x_conv4 = self.conv4(x_conv3)
         out = self.conv_out(x_conv4)
+        # print(f"Shape of out before dense(): {out.shape}")
+        dense_out = out.dense()
+        print(f"Shape of dense_out: {dense_out.shape}")
+        # Shape of dense_out: torch.Size([4, 128, 2, 200, 176])
 
         self.forward_re_dict['target'] = input_sp_tensor_ones.dense()
         x_up1 = self.deconv1(out.dense())
+        print(f"Shape of x_up1: {x_up1.shape}")
+        # Shape of x_up1: torch.Size([4, 32, 4, 400, 352])
         x_up2 = self.deconv2(x_up1)
         x_up3 = self.deconv3(x_up2)
    

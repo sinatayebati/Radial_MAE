@@ -1,0 +1,289 @@
+2024-09-05 21:03:58,363   INFO  ----------- Profiling Model -----------
+Model is on device: cuda:0
+Model is on device: cuda:1
+WARNING:2024-09-05 21:04:27 1010377:1010377 init.cpp:129] function status failed with error CUPTI_ERROR_NOT_INITIALIZED (15)
+WARNING:2024-09-05 21:04:27 1010377:1010377 init.cpp:130] CUPTI initialization failed - CUDA profiler activities will be missing
+INFO:2024-09-05 21:04:27 1010377:1010377 init.cpp:132] If you see CUPTI_ERROR_INSUFFICIENT_PRIVILEGES, refer to https://developer.nvidia.com/nvidia-development-tools-solutions-err-nvgpuctrperm-cupti
+voxel_features shape: torch.Size([64000, 5, 4])
+voxel_num_points shape: torch.Size([64000])
+WARNING:2024-09-05 21:04:27 1010378:1010378 init.cpp:129] function status failed with error CUPTI_ERROR_NOT_INITIALIZED (15)
+WARNING:2024-09-05 21:04:27 1010378:1010378 init.cpp:130] CUPTI initialization failed - CUDA profiler activities will be missing
+INFO:2024-09-05 21:04:27 1010378:1010378 init.cpp:132] If you see CUPTI_ERROR_INSUFFICIENT_PRIVILEGES, refer to https://developer.nvidia.com/nvidia-development-tools-solutions-err-nvgpuctrperm-cupti
+voxel_features shape: torch.Size([63214, 5, 4])
+voxel_num_points shape: torch.Size([63214])
+Shape of dense_out: torch.Size([4, 128, 2, 200, 176])
+Shape of dense_out: torch.Size([4, 128, 2, 200, 176])
+Shape of x_up1: torch.Size([4, 32, 4, 400, 352])
+Shape of x_up1: torch.Size([4, 32, 4, 400, 352])
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                 Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  Total KFLOPs  
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                          aten::zeros         0.01%     119.000us         0.07%     615.000us      30.750us           4 b           0 b       1.65 Gb           0 b            20            --  
+                          aten::empty         0.21%       1.844ms         0.21%       1.844ms       9.654us     352.32 Kb     352.32 Kb       3.21 Gb       3.21 Gb           191            --  
+                          aten::zero_         0.01%      72.000us         0.02%     216.000us       9.000us           0 b           0 b           0 b           0 b            24            --  
+                      model_inference         4.80%      42.324ms        99.99%     881.932ms     881.932ms          -4 b    -454.63 Kb       5.32 Gb      -1.83 Gb             1            --  
+                          aten::slice         0.01%     103.000us         0.01%     119.000us       6.263us           0 b           0 b           0 b           0 b            19            --  
+                     aten::as_strided         0.05%     406.000us         0.05%     406.000us       0.514us           0 b           0 b           0 b           0 b           790            --  
+                            aten::sum         0.01%     102.000us         0.01%     102.000us     102.000us           0 b           0 b    1000.00 Kb    1000.00 Kb             1            --  
+                           aten::view         0.00%      36.000us         0.00%      36.000us       4.000us           0 b           0 b           0 b           0 b             9            --  
+                      aten::clamp_min         0.04%     313.000us         0.24%       2.124ms      70.800us           0 b           0 b       2.50 Gb           0 b            30            --  
+                        aten::resize_         0.16%       1.382ms         0.16%       1.382ms       3.590us           0 b           0 b       1.25 Gb       1.25 Gb           385            --  
+                        aten::type_as         0.00%       8.000us         0.35%       3.064ms       3.064ms           0 b           0 b     250.00 Kb           0 b             1            --  
+                             aten::to         0.01%      64.000us         0.43%       3.803ms     135.821us     102.30 Kb           0 b       3.71 Mb           0 b            28            --  
+                       aten::_to_copy         0.02%     139.000us         0.42%       3.739ms     162.565us     102.30 Kb           0 b       3.71 Mb           0 b            23            --  
+                  aten::empty_strided         0.05%     431.000us         0.05%     431.000us      11.972us     102.30 Kb     102.30 Kb      42.27 Mb      42.27 Mb            36            --  
+                          aten::copy_         0.41%       3.594ms         0.41%       3.594ms      97.135us           0 b           0 b           0 b           0 b            37            --  
+                            aten::div         0.02%     186.000us         0.02%     186.000us     186.000us           0 b           0 b    1000.00 Kb    1000.00 Kb             1            --  
+                         aten::select         0.13%       1.120ms         0.14%       1.268ms       3.154us           0 b           0 b           0 b           0 b           402            --  
+                          aten::atan2         0.00%      34.000us         0.00%      34.000us      34.000us           0 b           0 b     250.00 Kb     250.00 Kb             1            --  
+                        aten::rad2deg         0.01%      45.000us         0.02%     141.000us      70.500us           0 b           0 b     250.00 Kb           0 b             2            --  
+                     aten::empty_like         0.01%      70.000us         0.10%     901.000us      53.000us           0 b           0 b       1.52 Gb           0 b            17            --  
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 881.981ms
+
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                 Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  Total KFLOPs  
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                          aten::zeros         0.01%     106.000us         0.08%     675.000us      33.750us           4 b           0 b       1.65 Gb           0 b            20            --  
+                          aten::empty         0.22%       1.922ms         0.22%       1.922ms      10.063us     323.89 Kb     323.89 Kb       3.19 Gb       3.19 Gb           191            --  
+                          aten::zero_         0.01%      71.000us         0.03%     233.000us       9.708us           0 b           0 b           0 b           0 b            24            --  
+                      model_inference         4.92%      43.253ms        99.99%     878.880ms     878.880ms          -4 b    -400.82 Kb       5.32 Gb      -1.79 Gb             1            --  
+                          aten::slice         0.01%      98.000us         0.01%     113.000us       5.947us           0 b           0 b           0 b           0 b            19            --  
+                     aten::as_strided         0.05%     411.000us         0.05%     411.000us       0.520us           0 b           0 b           0 b           0 b           790            --  
+                            aten::sum         0.01%      87.000us         0.01%      88.000us      88.000us           0 b           0 b     988.00 Kb     988.00 Kb             1            --  
+                           aten::view         0.00%      35.000us         0.00%      35.000us       3.889us           0 b           0 b           0 b           0 b             9            --  
+                      aten::clamp_min         0.03%     300.000us         0.19%       1.688ms      56.267us           0 b           0 b       2.48 Gb           0 b            30            --  
+                        aten::resize_         0.14%       1.219ms         0.14%       1.219ms       3.166us           0 b           0 b       1.24 Gb       1.24 Gb           385            --  
+                        aten::type_as         0.00%       7.000us         0.33%       2.899ms       2.899ms           0 b           0 b     247.00 Kb           0 b             1            --  
+                             aten::to         0.01%      56.000us         0.41%       3.619ms     124.793us      76.94 Kb           0 b       2.91 Mb           0 b            29            --  
+                       aten::_to_copy         0.02%     150.000us         0.41%       3.563ms     148.458us      76.94 Kb           0 b       2.91 Mb           0 b            24            --  
+                  aten::empty_strided         0.05%     424.000us         0.05%     424.000us      11.459us      76.94 Kb      76.94 Kb      33.27 Mb      33.27 Mb            37            --  
+                          aten::copy_         0.39%       3.417ms         0.39%       3.417ms      89.921us           0 b           0 b           0 b           0 b            38            --  
+                            aten::div         0.02%     177.000us         0.02%     177.000us     177.000us           0 b           0 b     988.00 Kb     988.00 Kb             1            --  
+                         aten::select         0.12%       1.048ms         0.14%       1.191ms       2.963us           0 b           0 b           0 b           0 b           402            --  
+                          aten::atan2         0.00%      37.000us         0.00%      37.000us      37.000us           0 b           0 b     247.00 Kb     247.00 Kb             1            --  
+                        aten::rad2deg         0.01%      45.000us         0.01%     131.000us      65.500us           0 b           0 b     247.00 Kb           0 b             2            --  
+                     aten::empty_like         0.01%      76.000us         0.10%     875.000us      51.471us           0 b           0 b       1.51 Gb           0 b            17            --  
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 878.925ms
+
+2024-09-05 21:04:29,166   INFO  Profiling completed. Top 20 time-consuming operations:
+2024-09-05 21:04:29,344   INFO  -------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                 Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  Total KFLOPs  
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                          aten::zeros         0.01%     119.000us         0.07%     615.000us      30.750us           4 b           0 b       1.65 Gb           0 b            20            --  
+                          aten::empty         0.21%       1.844ms         0.21%       1.844ms       9.654us     352.32 Kb     352.32 Kb       3.21 Gb       3.21 Gb           191            --  
+                          aten::zero_         0.01%      72.000us         0.02%     216.000us       9.000us           0 b           0 b           0 b           0 b            24            --  
+                      model_inference         4.80%      42.324ms        99.99%     881.932ms     881.932ms          -4 b    -454.63 Kb       5.32 Gb      -1.83 Gb             1            --  
+                          aten::slice         0.01%     103.000us         0.01%     119.000us       6.263us           0 b           0 b           0 b           0 b            19            --  
+                     aten::as_strided         0.05%     406.000us         0.05%     406.000us       0.514us           0 b           0 b           0 b           0 b           790            --  
+                            aten::sum         0.01%     102.000us         0.01%     102.000us     102.000us           0 b           0 b    1000.00 Kb    1000.00 Kb             1            --  
+                           aten::view         0.00%      36.000us         0.00%      36.000us       4.000us           0 b           0 b           0 b           0 b             9            --  
+                      aten::clamp_min         0.04%     313.000us         0.24%       2.124ms      70.800us           0 b           0 b       2.50 Gb           0 b            30            --  
+                        aten::resize_         0.16%       1.382ms         0.16%       1.382ms       3.590us           0 b           0 b       1.25 Gb       1.25 Gb           385            --  
+                        aten::type_as         0.00%       8.000us         0.35%       3.064ms       3.064ms           0 b           0 b     250.00 Kb           0 b             1            --  
+                             aten::to         0.01%      64.000us         0.43%       3.803ms     135.821us     102.30 Kb           0 b       3.71 Mb           0 b            28            --  
+                       aten::_to_copy         0.02%     139.000us         0.42%       3.739ms     162.565us     102.30 Kb           0 b       3.71 Mb           0 b            23            --  
+                  aten::empty_strided         0.05%     431.000us         0.05%     431.000us      11.972us     102.30 Kb     102.30 Kb      42.27 Mb      42.27 Mb            36            --  
+                          aten::copy_         0.41%       3.594ms         0.41%       3.594ms      97.135us           0 b           0 b           0 b           0 b            37            --  
+                            aten::div         0.02%     186.000us         0.02%     186.000us     186.000us           0 b           0 b    1000.00 Kb    1000.00 Kb             1            --  
+                         aten::select         0.13%       1.120ms         0.14%       1.268ms       3.154us           0 b           0 b           0 b           0 b           402            --  
+                          aten::atan2         0.00%      34.000us         0.00%      34.000us      34.000us           0 b           0 b     250.00 Kb     250.00 Kb             1            --  
+                        aten::rad2deg         0.01%      45.000us         0.02%     141.000us      70.500us           0 b           0 b     250.00 Kb           0 b             2            --  
+                     aten::empty_like         0.01%      70.000us         0.10%     901.000us      53.000us           0 b           0 b       1.52 Gb           0 b            17            --  
+-------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 881.981ms
+
+2024-09-05 21:04:29,345   INFO  Estimated total FLOPs: 64,000
+2024-09-05 21:04:29,693   INFO  CPU Time Total: 4159510.00ms
+2024-09-05 21:04:29,693   INFO  CUDA Time Total: 0.00ms
+2024-09-05 21:04:29,693   INFO  A 'trace.json' file has been created. You can view it in Chrome's chrome://tracing page.
+2024-09-05 21:04:29,693   INFO  Memory Usage:
+2024-09-05 21:04:29,693   INFO    Allocated: 5448.94 MB
+2024-09-05 21:04:29,694   INFO    Cached: 7050.00 MB
+2024-09-05 21:04:29,694   INFO  Model Structure:
+2024-09-05 21:04:29,694   INFO  Voxel_MAE(
+  (vfe): MeanVFE()
+  (backbone_3d): Radial_MAE(
+    (conv_input): SparseSequential(
+      (0): SubMConv3d(4, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+      (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (conv1): SparseSequential(
+      (0): SparseSequential(
+        (0): SubMConv3d(16, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv2): SparseSequential(
+      (0): SparseSequential(
+        (0): SparseConv3d(16, 32, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): SparseSequential(
+        (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (2): SparseSequential(
+        (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv3): SparseSequential(
+      (0): SparseSequential(
+        (0): SparseConv3d(32, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (2): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv4): SparseSequential(
+      (0): SparseSequential(
+        (0): SparseConv3d(64, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[0, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (1): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (2): SparseSequential(
+        (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+    )
+    (conv_out): SparseSequential(
+      (0): SparseConv3d(64, 128, kernel_size=[3, 1, 1], stride=[2, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+      (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (deconv1): Sequential(
+      (0): ConvTranspose3d(128, 32, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1), output_padding=(1, 1, 1), bias=False)
+      (1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (deconv2): Sequential(
+      (0): ConvTranspose3d(32, 8, kernel_size=(3, 3, 3), stride=(4, 2, 2), padding=(1, 1, 1), output_padding=(1, 1, 1), bias=False)
+      (1): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+      (2): ReLU()
+    )
+    (deconv3): Sequential(
+      (0): ConvTranspose3d(8, 1, kernel_size=(3, 3, 3), stride=(3, 2, 2), padding=(1, 1, 1), output_padding=(1, 1, 1), bias=False)
+    )
+    (criterion): BCEWithLogitsLoss()
+  )
+)
+2024-09-05 21:04:29,696   INFO  ==> Loading parameters from checkpoint /hdd_10tb/sina/Radial_MAE/output/kitti_models/radial_mae_kitti/default/ckpt/checkpoint_epoch_2.pth to CPU
+2024-09-05 21:04:29,706   INFO  ==> Loading optimizer parameters from checkpoint /hdd_10tb/sina/Radial_MAE/output/kitti_models/radial_mae_kitti/default/ckpt/checkpoint_epoch_2.pth to CPU
+==> Checkpoint trained from version: pcdet+0.6.0+255db8f+py3c03181
+2024-09-05 21:04:29,714   INFO  ==> Done
+==> Checkpoint trained from version: pcdet+0.6.0+255db8f+py3c03181
+2024-09-05 21:04:29,825   INFO  ----------- Model Voxel_MAE created, param count: 829672 -----------
+2024-09-05 21:04:29,825   INFO  DistributedDataParallel(
+  (module): Voxel_MAE(
+    (vfe): MeanVFE()
+    (backbone_3d): Radial_MAE(
+      (conv_input): SparseSequential(
+        (0): SubMConv3d(4, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (conv1): SparseSequential(
+        (0): SparseSequential(
+          (0): SubMConv3d(16, 16, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(16, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (conv2): SparseSequential(
+        (0): SparseSequential(
+          (0): SparseConv3d(16, 32, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (1): SparseSequential(
+          (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (2): SparseSequential(
+          (0): SubMConv3d(32, 32, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(32, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (conv3): SparseSequential(
+        (0): SparseSequential(
+          (0): SparseConv3d(32, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[1, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (1): SparseSequential(
+          (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (2): SparseSequential(
+          (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (conv4): SparseSequential(
+        (0): SparseSequential(
+          (0): SparseConv3d(64, 64, kernel_size=[3, 3, 3], stride=[2, 2, 2], padding=[0, 1, 1], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (1): SparseSequential(
+          (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+        (2): SparseSequential(
+          (0): SubMConv3d(64, 64, kernel_size=[3, 3, 3], stride=[1, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+          (1): BatchNorm1d(64, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+          (2): ReLU()
+        )
+      )
+      (conv_out): SparseSequential(
+        (0): SparseConv3d(64, 128, kernel_size=[3, 1, 1], stride=[2, 1, 1], padding=[0, 0, 0], dilation=[1, 1, 1], output_padding=[0, 0, 0], bias=False, algo=ConvAlgo.MaskImplicitGemm)
+        (1): BatchNorm1d(128, eps=0.001, momentum=0.01, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (deconv1): Sequential(
+        (0): ConvTranspose3d(128, 32, kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1), output_padding=(1, 1, 1), bias=False)
+        (1): BatchNorm3d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (deconv2): Sequential(
+        (0): ConvTranspose3d(32, 8, kernel_size=(3, 3, 3), stride=(4, 2, 2), padding=(1, 1, 1), output_padding=(1, 1, 1), bias=False)
+        (1): BatchNorm3d(8, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+        (2): ReLU()
+      )
+      (deconv3): Sequential(
+        (0): ConvTranspose3d(8, 1, kernel_size=(3, 3, 3), stride=(3, 2, 2), padding=(1, 1, 1), output_padding=(1, 1, 1), bias=False)
+      )
+      (criterion): BCEWithLogitsLoss()
+    )
+  )
+)
+epochs: 0it [00:00, ?it/s]2024-09-05 21:04:29,826   INFO  **********************Start training kitti_models/radial_mae_kitti(default)**********************
+epochs: 0it [00:28, ?it/s]
+2024-09-05 21:04:59,032   INFO  **********************End training kitti_models/radial_mae_kitti(default)**********************
